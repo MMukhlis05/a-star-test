@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Game Pathfinding A* - Uji Versi</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background: #f0f0f0;
+      margin: 0;
+      padding: 1rem;
+    }
+    iframe {
+      width: 95%;
+      height: 600px;
+      border: 2px solid #333;
+      margin-top: 1rem;
+      background: #000;
+    }
+    .button-group {
+      margin: 1rem 0;
+    }
+    button {
+      margin: 0 0.5rem;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Prototype Game Pathfinding A*</h1>
+  <p>Gunakan tombol di bawah untuk mengganti versi game yang ingin diuji:</p>
+
+  <div class="button-group">
+    <button onclick="loadGame('versi 1.0.0/index.html')">Versi 1.0.0 (Default)</button>
+    <button onclick="loadGame('versi 1.0.1/index.html')">Versi 1.0.1</button>
+  </div>
+
+  <iframe id="gameFrame" src="versi 1.0.0/index.html" allowfullscreen></iframe>
+
+  <script>
+    function loadGame(path) {
+      document.getElementById('gameFrame').src = path;
+    }
+  </script>
+</body>
+</html>
