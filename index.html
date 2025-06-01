@@ -1,25 +1,21 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Game Pathfinding A* - Uji Versi</title>
   <style>
     body {
       font-family: sans-serif;
-      text-align: center;
       background: #f0f0f0;
       margin: 0;
       padding: 1rem;
     }
-    iframe {
-      width: 95%;
-      height: 600px;
-      border: 2px solid #333;
-      margin-top: 1rem;
-      background: #000;
+    h1, p {
+      text-align: center;
     }
     .button-group {
+      text-align: center;
       margin: 1rem 0;
     }
     button {
@@ -28,6 +24,64 @@
       font-size: 1rem;
       cursor: pointer;
     }
+
+    .main-content {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    iframe {
+      width: 924px;
+      height: 500px;
+      border: 2px solid #333;
+      background: #000;
+    }
+
+    .controls-box {
+      width: 300px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      padding: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .controls-box h2 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      color: #222;
+    }
+
+    .controls-box ul {
+      padding-left: 1.2rem;
+      margin: 0.5rem 0;
+    }
+
+    .controls-box li {
+      margin-bottom: 0.3rem;
+    }
+
+    .version-description {
+      max-width: 1240px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .version-description h2 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    .version-description ul {
+      padding-left: 1.5rem;
+    }
   </style>
 </head>
 <body>
@@ -35,16 +89,119 @@
   <p>Gunakan tombol di bawah untuk mengganti versi game yang ingin diuji:</p>
 
   <div class="button-group">
-    <button onclick="loadGame('version-1.0.0/index.html')">Versi 1.0.0 (Default)</button>
-    <button onclick="loadGame('version-1.0.1/index.html')">Versi 1.0.1</button>
+    <button onclick="loadGame('version-1.0.0/index.html', 'v1')">Versi 1</button>
+    <button onclick="loadGame('version-1.1.1/index.html', 'v2')">Versi 2</button>
+    <button onclick="loadGame('version-1.2.0/index.html', 'v3')">Versi 3</button>
+    <button onclick="loadGame('version-1.3.0/index.html', 'v4')">Versi 4</button>
   </div>
 
-  <iframe id="gameFrame" src="versi 1.0.0/index.html" allowfullscreen></iframe>
+  <div class="main-content">
+    <iframe id="gameFrame" src="version-1.0.0/index.html" allowfullscreen></iframe>
+	
+	<section id="descriptionBox">
+    <!-- Konten deskripsi versi akan dimuat di sini -->
+    </section>
+  </div>
+
 
   <script>
-    function loadGame(path) {
+    const descriptions = {
+      v1: `
+        <h2>Versi 1 - Penerapan Dasar A-Star</h2>
+		<p1>Pengujian awal prototipe:<br>- Sistem pencarian jalan membuat musuh dapat berjalan menuju pemain.<br></p1>
+		<br>
+		<strong>Status & Kontrol Player:</strong>
+		  <ul>
+			<li>Gerak: W A S D</li>
+		  </ul>
+		<strong>Kekurangan yang diketahui:</strong>
+        <ul>
+          <li>Musuh berjalan lancar namun tersangkut saat berjalan mendekati rintangan.</li>
+          <li>Butuh efek visualisasi jalur yang musuh akan lewati.</li>
+        </ul>
+      `,
+      v2: `
+        <h2>Versi 2 - Penerapan Batas Jarak Pandang</h2>
+		<p1>
+		  Pengujian kedua prototipe:
+		  <br>- Musuh hanya mengejar pemain saat berada dalam lingkaran pandangan.<br>
+		</p1>
+		<br>
+		<strong>Status & Kontrol Player:</strong>
+		  <ul>
+			<li>Gerak: W A S D</li>
+		  </ul>
+		<strong>Perbaikan dari versi sebelumnya:</strong>
+        <ul>
+          <li>Penambahan efek visual dari jalur yang akan dilalui musuh.</li>
+          <li>Perbaikan titik jalur musuh agar tidak tersangkut seperti sebelumnya.</li>
+        </ul>
+		<strong>Kekurangan yang diketahui:</strong>
+        <ul>
+          <li>Butuh penyesuaian ukuran jarak pandang.</li>
+        </ul>
+      `,
+      v3: `
+        <h2>Versi 3 - Penerapan Variasi Gerakan</h2>
+		<p1>
+		  Pengujian ketiga prototipe:
+		  <br>- Musuh 1 langsung bergerak ke pemain saat pemain ada dalam pandangan.
+		  <br>- Musuh 2 memiliki variasi gerakan "gerak-jeda" saat mengejar pemain.<br>
+		</p1>
+		<br>
+		<strong>Status & Kontrol Player:</strong>
+		  <ul>
+			<li>Gerak: W A S D</li>
+		  </ul>
+		<strong>Perbaikan dari versi sebelumnya:</strong>
+        <ul>
+          <li>Penyesuaian ukuran jarak pandang.</li>
+        </ul>
+		<strong>Kekurangan yang diketahui:</strong>
+        <ul>
+          <li>"Gerak-jeda" Musuh 2 tidak konsisten jika pemain sering keluar masuk pandang.</li>
+        </ul>
+      `,
+      v4: `
+        <h2>Versi 4 - Implementasi Penuh</h2>
+		<p1>
+		  Pengujian ketiga prototipe:
+		  <br>- Pembaruan sprite lingkungan, pemain, dan musuh.
+		  <br>- Penambahan animasi pemain dan musuh.
+		  <br>- Penyesuaian layout tile/peta.
+		  <br>- Penambahan mekanisme gerak 8 arah (sebelumnya 4 arah).
+		  <br>- Penambahan visualisasi debugging.
+		  <br>
+		  <br>Penambahan 5 Fase untuk kebutuhan Analisis Data:
+		  <br>(jalur lurus, memutar, labirin kecil, terbuka kecil, dan kompleks)
+		  <br>
+		</p1>
+		<br>
+		<strong>Status & Kontrol Player:</strong>
+		  <ul>
+			<li>Gerak: W A S D</li>
+		  </ul>
+		<strong>Perbaikan dari versi sebelumnya:</strong>
+        <ul>
+          <li>Menambah reset timer "gerak-jeda" saat pemain keluar pandangan Musuh 2.</li>
+        </ul>
+		<strong>Kekurangan yang diketahui:</strong>
+        <ul>
+          <li>Kedua musuh tersangkut saat berjalan diagonal melalui rintangan.</li>
+          <li>Musuh Skeleton mengalami gerak bolak-balik menyebabkan animasi flickering.</li>
+        </ul>
+      `
+    };
+
+    function loadGame(path, versionKey) {
       document.getElementById('gameFrame').src = path;
+      document.getElementById('descriptionBox').innerHTML = descriptions[versionKey];
     }
+
+    // Inisialisasi deskripsi versi pertama saat halaman dimuat
+    window.onload = () => {
+      document.getElementById('descriptionBox').innerHTML = descriptions.v1;
+    };
   </script>
 </body>
 </html>
